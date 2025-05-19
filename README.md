@@ -45,7 +45,6 @@ A grouped bar chart of survival by embarkation port
 
 A raw data toggle for full transparency
 
-I used matplotlib.pyplot just to set a clean style globally (ggplot), and kept the visuals intuitive using Plotly for modern, responsive charts.
-
+This app shows how you can build a clean, interactive data dashboard with minimal code. I used Plotly to create modern, responsive visuals, and set a global ‘ggplot’ style with matplotlib for consistent formatting. 
 This app shows how you can build a data dashboard with minimal code while giving users meaningful interaction with historical data.
 
