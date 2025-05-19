@@ -4,6 +4,7 @@ import plotly.express as px
 
 # Load data
 df = pd.read_csv("Titanic-Dataset.csv")
+df["Survived"] = df["Survived"].map({0: "Did Not Survive", 1: "Survived"})
 
 # Page config
 st.set_page_config(page_title="Titanic Explorer", layout="wide")
@@ -55,14 +56,13 @@ st.dataframe(filtered_df, use_container_width=True)
 
 # Pie chart: Survival rate
 st.subheader("🧍 Survival Distribution")
-survival_counts = filtered_df["Survived"].value_counts().sort_index()
-survival_labels = ["Did Not Survive", "Survived"]
+survival_counts = filtered_df["Survived"].value_counts().reindex(["Did Not Survive", "Survived"], fill_value=0)
 
 fig_pie = px.pie(
-    names=survival_labels,
+    names=survival_counts.index,
     values=survival_counts.values,
     title="Survival Rate",
-    color=survival_labels,
+    color=survival_counts.index,
     color_discrete_map={
         "Survived": "green",
         "Did Not Survive": "darkred"
@@ -73,7 +73,6 @@ st.plotly_chart(fig_pie)
 # Bar chart: Survival by Embarkation Port
 st.subheader("💬 Survival by Embarkation Port")
 port_survival = filtered_df.groupby(["Embarked", "Survived"]).size().reset_index(name="Count")
-port_survival["Survived"] = port_survival["Survived"].map({0: "Did Not Survive", 1: "Survived"})
 
 fig_bar = px.bar(
     port_survival,
